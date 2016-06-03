@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_actionbar));
+        getSupportActionBar().setTitle(R.string.app_title);
     }
 
     @Override

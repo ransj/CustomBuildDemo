@@ -3,6 +3,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+    signingConfigs {
+        config {
+            keyAlias 'pinganfu'
+            keyPassword 'pinganfu'
+            storeFile file('/Users/ransj/workspace/code/CustomBuild/keystore.jks')
+            storePassword 'pinganfu'
+        }
+    }
 
     defaultConfig {
         applicationId "ransj.os.cb"
@@ -10,6 +18,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
 
     sourceSets {
@@ -17,14 +26,34 @@ android {
 
         debug.setRoot("src/debug")
         debug.jniLibs.srcDirs = ["src/debug/libs"]
+
+        freeDebug {
+            setRoot("src/freeDebug")
+        }
     }
 
     buildTypes {
-        debug {
-        }
         release {
-            minifyEnabled false
+            resValue "string", "app_title", "release"
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            initWith release
+
+            resValue "string", "app_title", "debug"
+            minifyEnabled false
+        }
+    }
+
+    productFlavors {
+        free {
+            resValue "string", "app_title", "free"
+            applicationId 'os.ransj.cb.free'
+        }
+        pro {
+            resValue "string", "app_title", "pro"
+            applicationId 'os.ransj.cb.pro'
         }
     }
 }
